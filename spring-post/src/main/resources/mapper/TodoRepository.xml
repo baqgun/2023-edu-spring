@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.re.kitri.springpost.repository.TodoRepository">
+    <select id="selectAllTodo" resultType="kr.re.kitri.springpost.model.Todo">
+        SELECT ID
+             , TITLE
+             , COMPLETED
+        FROM TODO_K
+    </select>
+    <select id="selectTodoByid"  parameterType="int" resultType="kr.re.kitri.springpost.model.Todo">
+        SELECT ID
+             , TITLE
+             , COMPLETED
+          FROM TODO_K
+         WHERE ID = #{todoId}
+    </select>
+
+    <delete id="deleteTodo"  parameterType="int" >
+        DELETE FROM TODO_K
+         WHERE id = #{todoId}
+    </delete>
+
+    <insert id="insertTodo" parameterType="kr.re.kitri.springpost.model.Todo">
+        INSERT INTO TODO_K (ID, TITLE, COMMPLETED)
+        VALUES (#{id}, #{title},#{completed})
+    </insert>
+
+    <update id="updateTodo" parameterType="kr.re.kitri.springpost.model.Todo">
+        UPDATE TODO_K
+           SET TITLE       = #{title}
+             , COMMPLETED  = #{completed}
+         WHERE ID = #{todoId}
+    </update>
+
+<!--    List<Post> selectAllPosts();-->
+<!--    Post selectPostById(int postId);-->
+<!--    String deletePost(int postId);-->
+<!--    Post insertPost(Post post);-->
+</mapper>
