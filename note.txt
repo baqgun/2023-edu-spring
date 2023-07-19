@@ -1,0 +1,342 @@
+-- 2023.7.10
+- 강의교재
+https://github.com/soongon/spring-kitri
+
+-- 강의중 코드
+https://github.com/soongon/spring-2023
+
+-- 메이븐 모노레포
+https://mvnrepository.com/
+
+-- 자바시크립트 모노레포
+https://www.npmjs.com/
+
+-- 파이썬 모노레포
+https://pypi.org/
+
+
+src/pom.xml
+  - 프로젝트 정보, dependency 추가 등 활용
+
+-- 메이븐으로 만든 프로직트 특성
+src/main/java
+          /resources
+src/test
+
+스프링 부팅 시 모든 리소스 다 로딩함
+
+
+
+@RestController
+
+public class ProductController {
+
+    @GetMapping("/products")
+    public String products(){
+        return "모든 상품";
+    }
+}
+
+상속 받지 않고, 바로 사용 POJO
+
+어노테이션을 붙여주면 아래 클래스는 컴포넌트가 된다?
+빈 
+
+객체 = 관리받는 객체
+컨테이너 안에서 관리
+컨네이너가 스프링
+
+스프링이 자동으로 함(new 명령)
+
+컨트롤러 = 컴포넌트
+
+컨테이너 안에서 컴포넌트를 풀로 관리 
+
+요청할때마다 플로 만든 컴포넌트를 제공함으로 사용
+
+풀링!!!
+
+요청할때마다 플로 만든 컴포넌트를 제공함으로 사용
+=
+객체 관리를 컨테이너를 통해 객체를 만들어서 풀로 관리(=컴포넌트)
+
+※ 클라우드는 컨네이너 스케일을 조절 가능(요청량에 따라)
+
+
+○ 화면과 데이터 분리시킬때 사용하는 패턴
+  - MVC 패턴
+    service
+    sqlmap
+   - M                  V
+        + broker +
+           (중개)
+           = controller
+
+  - MVP
+  - MVVM
+
+
+프로덕트 컨트롤러가 프로덕트 서비스를 사용한다
+
+상속
+사용 - 컴포지션, 의존
+
+==> 프로덕트 컨트롤러는 프로덕스 서비스에 의존한다.
+
+
+스프링 컨테이너를 사용하면서, 컴포넌트를 new로 사용하는 것은 모순
+(알아서 해주는데, new 로 사용하니)
+
+autowired = injection
+
+
+주입은 컨테이너가 알아서 해줄께, 편하게 써라
+
+@Autowired  --> field injection - memeber 변수
+
+(권장) 생성자 injection, setter Injdection
+
+컴포넌트화를 시킨다는 것은 WAS 서버 스타트 할때 메모리에 로딩
+
+컴포넌트 오토 스캔, 소스(패키지) 내에 어노테이션 확인하여 자동으로 컴포넌트 로딩
+
+
+1. URL과 Controller 가 엮임
+
+2. Controller는 서비스를 호출 = 서비스가 멤버변수로 있어야 함
+==> 컨트롤러가 서비스를 사용함
+
+3. 서비스는 레파지토리를 사용함
+
+Repository = DAO
+
+
+Web App 
+
+(데이터도 객체로)
+자바객체
+ - VO      (전자정부)
+ - Domain Object
+ - Model  (최근 스프링)
+
+VO < - OR 매핑 -> RDB 
+
+
+
+
+-- 2023.7.11
+
+서버 사이드 렌더링 --> 클라이언트 사이드 랜더링
+
+1. 기능설계
+2. DB설계
+3. 화면설계
+
+
+jsp --> timeleaf
+
+리소스를 중심으로 설계해라
+REST API 방식
+
+GET :: /posts            viewAllPosts
+GET :: /posts/{id}       viewPostById
+POST :: /posts          registPost
+DELETE :: /posts/{id}   removePost
+PUT :: posts             modifyPost
+
+https://github.com/soongon/spring-post
+
+
+기준 (R&R)
+C
+S
+R
+
+
+Jackson(JSON Parser)
+
+
+fake api server
+
+https://jsonplaceholder.typicode.com/comments
+
+
+
+모든할일보기.GET::/todos                          selectAllTodo
+할일상세보기(with할일ID)GET::/todos/{todoID} selectTodo
+할일등록POST::/todos  regist
+할일완료로만들기(진행중으로만들기)—>할일수정PUT::/todos/{todoID}  modifyTodo
+할일삭제     DELETE  ::/todos/{todoID}  deleteTodo
+
+할일검색(by이름,작성자,만료기간..)GET::/todos   searchTodo
+
+
+-- API 
+https://rapidapi.com/
+
+-- 공공데이터포탈
+https://www.data.go.kr/
+
+
+
+database-1.csebiuu6q8pc.ap-northeast-2.rds.amazonaws.com
+jdbc:postgresql://database-1.csebiuu6q8pc.ap-northeast-2.rds.amazonaws.com:5432/postgres
+postgress
+postgres
+
+
+DB접속한다 = Connection 객체를 생성한다
+
+요청이 많아짐에 따라 변경(DataSource 객체를 생성한다.)
+
+conn을 pool로 관리
+
+connection에서 DataSource로 전환됨
+
+
+WAS가 시작될때 수행됨 컴포넌트(수행시기)
+
+스프링에서 이야기 하는 컴포넌트 
+자바에서 이야기하는 컴포넌트는  Bean 
+
+jvm (bean)
+string
+
+@Component 
+@bean
+
+데이터소스객체가 생성된다
+
+
+
+jdbc:postgresql://database-1.csebiuu6q8pc.ap-northeast-2.rds.amazonaws.com:5432/postgres
+postgres
+
+jdbc - postgres db(connection) - datasource - mybatis
+
+
+https://github.com/features/copilot/
+
+file-setting-
+
+
+xml로 구성된 SQL 파일을 sqlSessionFactory에서 모두 읽어와서 관리
+--> 오류나면 WAS가 안뜨는 이유
+
+    @Bean
+    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setMapperLocations(
+                applicationContext.getResources("classpath:/mapper/**/*.xml"));  //-- 중요
+        return sqlSessionFactoryBean.getObject();
+    }
+
+
+--https://mybatis.org/mybatis-3/getting-started.html
+Exploring Mapped SQL Statements
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.BlogMapper">
+  <select id="selectBlog" resultType="Blog">
+    select * from Blog where id = #{id}
+  </select>
+</mapper>
+
+
+스프링은 미리 준비한다. 
+
+
+--> 자동으로 리스트로 결과값을 담아줌
+    <select id="selectAllPosts" resultType="kr.re.kitri.springpost.model.Post">
+        SELECT post_id
+             , title
+             , body
+             , likes
+          FROM POST
+    </select>
+
+
+    <select id="selectPostById"  parameterType="int" resultType="kr.re.kitri.springpost.model.Post">
+        SELECT post_id
+             , title
+             , body
+             , likes
+          FROM POST
+         WHERE post_id = #{postId}   //-- #{} 호출함수의 파라미터 변수명
+    </select>
+
+
+
+{
+    "post_id": 1,
+    "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+    "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
+    "likes":100
+}
+
+
+
+<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.5.4</version>
+</dependency>
+
+
+
+Repository 는 interface 로 구성하고, mapper로 실제 데이터 처리함
+
+-- mybatis 속성
+https://mybatis.org/mybatis-3/sqlmap-xml.html
+
+
+
+Logger
+
+-- Level
+Trace
+Debug
+Info
+Warn
+Error
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public static final Logger log = LoggerFactory.getLogger(DataSourceConfiguration.class);
+
+
+ public static final Logger log = LoggerFactory.getLogger(PostController.class);
+
+    @Autowired
+    private PostService postService;
+
+    @GetMapping("posts")
+    public List<Post> viewAllPosts(){
+        log.debug("전체보기 ........");
+        return postService.getAllPosts();
+    }
+
+-- Lombok (로깅) --> 대체
+@Slf4J
+
+
+
+
+
+SELECT post_id , title , body , likes FROM "Post_k"
+
+
+jUnit 
+-- 함수가 모두 테스트 대상
+
+
+AspectJ -> java에서 AOP 기술 적용하기 위한 언어? 라이브러리??
+
+
+
+
